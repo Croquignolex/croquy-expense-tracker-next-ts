@@ -1,20 +1,22 @@
 "use client";
 
 import React, {useReducer} from "react";
+import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
+import {ThemeProvider} from "next-themes";
 
 import {initialGlobalState, rootReducer, RootContext, GlobalStateType} from "@/src/lib/context";
 import {getLocaleStorageItem} from "@/src/helpers/localStorageHelpers";
 
 import "@/src/i18n/config.ts";
 
-// const queryClient: QueryClient = new QueryClient({
-//     defaultOptions: {
-//         queries: {
-//             staleTime: 0,
-//             refetchOnWindowFocus: false,
-//         },
-//     },
-// });
+const queryClient: QueryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 0,
+            refetchOnWindowFocus: false,
+        },
+    },
+});
 
 const initialFunction = (initial: GlobalStateType): GlobalStateType => {
     const persistedData: object = getLocaleStorageItem("user");
@@ -36,8 +38,12 @@ export default function Root({children}: Readonly<{children: React.ReactNode}>) 
     const [globalState, globalDispatch] = useReducer(rootReducer, initialGlobalState, initialFunction);
 
     return (
-        <RootContext.Provider value={{globalState, globalDispatch}}>
-            {children}
-        </RootContext.Provider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <QueryClientProvider client={queryClient}>
+                <RootContext.Provider value={{globalState, globalDispatch}}>
+                    {children}
+                </RootContext.Provider>
+            </QueryClientProvider>
+        </ThemeProvider>
     );
 }

@@ -27,11 +27,13 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
     return (
         <html lang="en">
-            <Root>
-                <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                    {children}
-                </body>
-            </Root>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+                <Root>
+                    <div className={"font-[family-name:var(--font-geist-sans)]"}>
+                        {children}
+                    </div>
+                </Root>
+            </body>
         </html>
     );
 }
