@@ -1,0 +1,43 @@
+"use client";
+
+import React, {useReducer} from "react";
+
+import {initialGlobalState, rootReducer, RootContext, GlobalStateType} from "@/src/lib/context";
+import {getLocaleStorageItem} from "@/src/helpers/localStorageHelpers";
+
+import "@/src/i18n/config.ts";
+
+// const queryClient: QueryClient = new QueryClient({
+//     defaultOptions: {
+//         queries: {
+//             staleTime: 0,
+//             refetchOnWindowFocus: false,
+//         },
+//     },
+// });
+
+const initialFunction = (initial: GlobalStateType): GlobalStateType => {
+    const persistedData: object = getLocaleStorageItem("user");
+
+       if(persistedData) {
+           return {
+               isAuthorized: true,
+               emailAddress: persistedData?.emailAddress,
+               lastName: persistedData?.lastName,
+               firstName: persistedData?.firstName,
+               username: persistedData?.username,
+               phoneNumber: persistedData?.phoneNumber,
+               avatar: persistedData?.avatar,
+           }
+       } else return initial;
+}
+
+export default function Root({children}: Readonly<{children: React.ReactNode}>) {
+    const [globalState, globalDispatch] = useReducer(rootReducer, initialGlobalState, initialFunction);
+
+    return (
+        <RootContext.Provider value={{globalState, globalDispatch}}>
+            {children}
+        </RootContext.Provider>
+    );
+}
