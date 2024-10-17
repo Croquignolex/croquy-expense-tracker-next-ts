@@ -1,97 +1,67 @@
 "use client"
 
-import * as React from "react";
-import Link from "next/link";
-import Image from "next/image";
-// import { useTheme } from "next-themes";
+import { useTheme } from "next-themes";
+import {MoonIcon, SunIcon} from "lucide-react";
 
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/src/components/ui/dropdown-menu";
+import { Card, CardDescription, CardFooter, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
+import Footer from "@/src/components/footer";
 
 export default function ModeToggle() {
-    // const { setTheme } = useTheme()
+    const { setTheme } = useTheme();
 
     return (
-        <>
-            <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-                <div className="flex items-center justify-center py-12">
-                    <div className="mx-auto grid w-[400px] gap-6">
-                        <div className="grid gap-2 text-center">
-                            <h1 className="text-3xl font-bold">Login</h1>
-                            <p className="text-balance text-muted-foreground">
-                                Enter your email below to login to your account
-                            </p>
-                        </div>
-                        <div className="grid gap-4">
+        <div className="w-full lg:grid lg:grid-cols-1 min-h-screen">
+            <div className="flex items-center justify-center">
+                <div className="mx-auto grid gap-6">
+                    <Card className="w-full max-w-sm">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="icon">
+                                    <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                                    <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                                    <span className="sr-only">Toggle theme</span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => setTheme("light")}>
+                                    Light
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                                    Dark
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setTheme("system")}>
+                                    System
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                        <CardHeader>
+                            <CardTitle className="text-2xl">Login</CardTitle>
+                            <CardDescription>
+                                Enter your email below to login to your account.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent className="grid gap-4">
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="m@example.com"
-                                    required
-                                />
+                                <Input id="email" type="email" placeholder="m@example.com" required />
                             </div>
                             <div className="grid gap-2">
-                                <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
-                                    <Link
-                                        href="/forgot-password"
-                                        className="ml-auto inline-block text-sm underline"
-                                    >
-                                        Forgot your password?
-                                    </Link>
-                                </div>
+                                <Label htmlFor="password">Password</Label>
                                 <Input id="password" type="password" required />
                             </div>
-                            <Button type="submit" className="w-full">
-                                Login
-                            </Button>
-                            <Button variant="outline" className="w-full">
-                                Login with Google
-                            </Button>
-                        </div>
-                        <div className="mt-4 text-center text-sm">
-                            Don&apos;t have an account?{" "}
-                            <Link href="#" className="underline">
-                                Sign up
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-                <div className="hidden bg-muted lg:block">
-                    <Image
-                        src="/placeholder.svg"
-                        alt="Image"
-                        width="1920"
-                        height="1080"
-                        className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-                    />
+                        </CardContent>
+                        <CardFooter>
+                            <Button className="w-full">Sign in</Button>
+                        </CardFooter>
+                    </Card>
                 </div>
             </div>
-            {/*<DropdownMenu>*/}
-            {/*    <DropdownMenuTrigger asChild>*/}
-            {/*        <Button variant="outline" size="icon">*/}
-            {/*            <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />*/}
-            {/*            <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />*/}
-            {/*            <span className="sr-only">Toggle theme</span>*/}
-            {/*        </Button>*/}
-            {/*    </DropdownMenuTrigger>*/}
-            {/*    <DropdownMenuContent align="end">*/}
-            {/*        <DropdownMenuItem onClick={() => setTheme("light")}>*/}
-            {/*            Light*/}
-            {/*        </DropdownMenuItem>*/}
-            {/*        <DropdownMenuItem onClick={() => setTheme("dark")}>*/}
-            {/*            Dark*/}
-            {/*        </DropdownMenuItem>*/}
-            {/*        <DropdownMenuItem onClick={() => setTheme("system")}>*/}
-            {/*            System*/}
-            {/*        </DropdownMenuItem>*/}
-            {/*    </DropdownMenuContent>*/}
-            {/*</DropdownMenu>*/}
 
-
-        </>
+            <Footer absolute />
+        </div>
     )
 }
