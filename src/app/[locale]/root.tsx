@@ -7,8 +7,6 @@ import {ThemeProvider} from "next-themes";
 import {initialGlobalState, rootReducer, RootContext, GlobalStateType} from "@/src/lib/context";
 import {getLocaleStorageItem} from "@/src/helpers/localStorageHelpers";
 
-import "@/src/i18n/config.ts";
-
 const queryClient: QueryClient = new QueryClient({
     defaultOptions: {
         queries: {
@@ -37,8 +35,9 @@ const initialFunction = (initial: GlobalStateType): GlobalStateType => {
 export default function Root({children}: Readonly<{children: React.ReactNode}>) {
     const [globalState, globalDispatch] = useReducer(rootReducer, initialGlobalState, initialFunction);
 
+
     return (
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <QueryClientProvider client={queryClient}>
                 <RootContext.Provider value={{globalState, globalDispatch}}>
                     {children}

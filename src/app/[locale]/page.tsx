@@ -1,7 +1,9 @@
 "use client"
 
 import { useTheme } from "next-themes";
-import {MoonIcon, SunIcon} from "lucide-react";
+import { MoonIcon, SunIcon } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
+import { Link } from "@/src/i18n/routing";
 
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -12,6 +14,10 @@ import Footer from "@/src/components/footer";
 
 export default function ModeToggle() {
     const { setTheme } = useTheme();
+    const t = useTranslations();
+    const l = useLocale();
+
+     console.log({l})
 
     return (
         <div className="w-full lg:grid lg:grid-cols-1 min-h-screen">
@@ -39,6 +45,10 @@ export default function ModeToggle() {
                             </DropdownMenuContent>
                         </DropdownMenu>
                         <CardHeader>
+                            <h1>{t('title')}</h1>
+                            <Link href="/about">{t('about')}</Link>
+
+
                             <CardTitle className="text-2xl">Login</CardTitle>
                             <CardDescription>
                                 Enter your email below to login to your account.
