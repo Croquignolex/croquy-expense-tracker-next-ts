@@ -1,7 +1,7 @@
 import {Context, createContext} from "react";
 
-import {MediaType} from "@/src/lib/types";
-import {GLOBAL_STATE_UPDATE_LOGIN_DATA, GLOBAL_STATE_CLEAR_DATA} from "@/src/constants/actions";
+import {MediaType} from "@/lib/types";
+import {GLOBAL_STATE_UPDATE_LOGIN_DATA, GLOBAL_STATE_CLEAR_DATA} from "@/constants/actions";
 
 export type GlobalStateType = {
     isAuthorized: boolean;

@@ -3,14 +3,14 @@
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
-import { Link } from "@/src/i18n/routing";
+import { Link } from "@/i18n/routing";
 
-import { Button } from "@/src/components/ui/button";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/src/components/ui/dropdown-menu";
-import { Card, CardDescription, CardFooter, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
-import Footer from "@/src/components/footer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Card, CardDescription, CardFooter, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Footer from "@/components/footer";
 
 export default function ModeToggle() {
     const { setTheme } = useTheme();

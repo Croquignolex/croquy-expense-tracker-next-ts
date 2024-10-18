@@ -1,6 +1,6 @@
 "use client"
 
-import {APP} from "@/src/constants/configs";
+import {APP} from "@/constants/configs";
 
 export default function Footer({absolute = false} : {absolute: boolean}) {
     return (

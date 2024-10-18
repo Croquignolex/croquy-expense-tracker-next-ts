@@ -1,22 +1,10 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import {NextIntlClientProvider} from 'next-intl';
-import {getMessages} from 'next-intl/server';
+import {getLocale, getMessages} from 'next-intl/server';
+import {AbstractIntlMessages} from "use-intl";
 
-import "@/src/assets/css/globals.css";
-import Root from "@/src/app/[locale]/root";
-
-const geistSans = localFont({
-    src: "../../assets/fonts/GeistVF.woff",
-    variable: "--font-geist-sans",
-    weight: "100 900",
-});
-
-const geistMono = localFont({
-    src: "../../assets/fonts/GeistMonoVF.woff",
-    variable: "--font-geist-mono",
-    weight: "100 900",
-});
+import "@/assets/css/globals.css";
+import Root from "@/app/[locale]/root";
 
 export const metadata: Metadata = {
     title: {
@@ -24,15 +12,16 @@ export const metadata: Metadata = {
         template: '%s - Croquextra'
     },
     description: 'Croquy Expense Tracker',
-}
+};
 
-export default async function RootLayout({children, params: {locale}}: Readonly<{children: React.ReactNode, params: {locale: string}}>) {
+export default async function RootLayout({children}: Readonly<{ children: React.ReactNode}>): Promise<unknown> {
     // Providing all messages to the client
-    const messages = await getMessages();
+    const locale: string = await getLocale();
+    const messages: AbstractIntlMessages = await getMessages();
 
     return (
         <html lang={locale} suppressHydrationWarning>
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-accent`}>
+            <body className="antialiased bg-accent">
                 <NextIntlClientProvider messages={messages}>
                     <Root>
                         <div className={"font-[family-name:var(--font-geist-sans)]"}>
@@ -43,4 +32,4 @@ export default async function RootLayout({children, params: {locale}}: Readonly<
             </body>
         </html>
     );
-}
+};

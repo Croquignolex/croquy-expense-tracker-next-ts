@@ -4,8 +4,8 @@ import React, {useReducer} from "react";
 import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
 import {ThemeProvider} from "next-themes";
 
-import {initialGlobalState, rootReducer, RootContext, GlobalStateType} from "@/src/lib/context";
-import {getLocaleStorageItem} from "@/src/helpers/localStorageHelpers";
+import {initialGlobalState, rootReducer, RootContext, GlobalStateType} from "@/lib/context";
+import {getLocaleStorageItem} from "@/helpers/localStorageHelpers";
 
 const queryClient: QueryClient = new QueryClient({
     defaultOptions: {
