@@ -17,24 +17,25 @@ const queryClient: QueryClient = new QueryClient({
 });
 
 const initialFunction = (initial: GlobalStateType): GlobalStateType => {
-    const persistedData: object = getLocaleStorageItem("user");
+    const persistedData: object | null = getLocaleStorageItem("user");
 
        if(persistedData) {
+           const p = persistedData as GlobalStateType;
+
            return {
                isAuthorized: true,
-               emailAddress: persistedData?.emailAddress,
-               lastName: persistedData?.lastName,
-               firstName: persistedData?.firstName,
-               username: persistedData?.username,
-               phoneNumber: persistedData?.phoneNumber,
-               avatar: persistedData?.avatar,
+               emailAddress: p.emailAddress,
+               lastName: p.lastName,
+               firstName: p.firstName,
+               username: p.username,
+               phoneNumber: p.phoneNumber,
+               avatar: p.avatar,
            }
        } else return initial;
 }
 
 export default function Root({children}: Readonly<{children: React.ReactNode}>) {
     const [globalState, globalDispatch] = useReducer(rootReducer, initialGlobalState, initialFunction);
-
 
     return (
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

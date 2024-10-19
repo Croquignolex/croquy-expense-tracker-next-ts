@@ -1,4 +1,5 @@
 {
-  "title": "Bonjour!",
-  "about": "Go to the about page"
+    "footer": {
+        "message": "Construit par <authorLink>{author}</authorLink>. Le code est disponible sur <repoLink>{repo}</repoLink>."
+    }
 }

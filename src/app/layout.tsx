@@ -4,7 +4,7 @@ import {getLocale, getMessages} from 'next-intl/server';
 import {AbstractIntlMessages} from "use-intl";
 
 import "@/assets/css/globals.css";
-import Root from "@/app/[locale]/root";
+import Root from "@/app/root";
 
 export const metadata: Metadata = {
     title: {
