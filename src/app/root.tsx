@@ -5,7 +5,7 @@ import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
 import {ThemeProvider} from "next-themes";
 
 import {initialGlobalState, rootReducer, RootContext, GlobalStateType} from "@/lib/context";
-import {getLocaleStorageItem} from "@/helpers/localStorageHelpers";
+import {getLocaleStorageItem} from "@/helpers/localStorage";
 
 const queryClient: QueryClient = new QueryClient({
     defaultOptions: {
@@ -19,20 +19,20 @@ const queryClient: QueryClient = new QueryClient({
 const initialFunction = (initial: GlobalStateType): GlobalStateType => {
     const persistedData: object | null = getLocaleStorageItem("user");
 
-       if(persistedData) {
-           const p = persistedData as GlobalStateType;
+    if(persistedData) {
+        const p = persistedData as GlobalStateType;
 
-           return {
-               isAuthorized: true,
-               emailAddress: p.emailAddress,
-               lastName: p.lastName,
-               firstName: p.firstName,
-               username: p.username,
-               phoneNumber: p.phoneNumber,
-               avatar: p.avatar,
-           }
-       } else return initial;
-}
+        return {
+            isAuthorized: true,
+            emailAddress: p.emailAddress,
+            lastName: p.lastName,
+            firstName: p.firstName,
+            username: p.username,
+            phoneNumber: p.phoneNumber,
+            avatar: p.avatar,
+        }
+   } else return initial;
+};
 
 export default function Root({children}: Readonly<{children: React.ReactNode}>) {
     const [globalState, globalDispatch] = useReducer(rootReducer, initialGlobalState, initialFunction);

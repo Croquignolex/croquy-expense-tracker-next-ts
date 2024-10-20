@@ -1,4 +1,4 @@
-export const APP = {
+export const ENV_APP = {
     name: process.env.NEXT_PUBLIC_APP_NAME,
     version: process.env.NEXT_PUBLIC_APP_VERSION,
     fullName: process.env.NEXT_PUBLIC_APP_FULL_NAME,
@@ -8,6 +8,6 @@ export const APP = {
     repoUrl: process.env.NEXT_PUBLIC_APP_REPO_URL,
 };
 
-export const API = {
+export const ENV_API = {
     baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 };

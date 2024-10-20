@@ -1,5 +1,8 @@
 {
     "footer": {
         "message": "Built by <authorLink>{author}</authorLink>. The source code is available on <repoLink>{repo}</repoLink>."
-    }
+    },
+    "dark": "Dark",
+    "system": "System",
+    "light": "Light"
 }
