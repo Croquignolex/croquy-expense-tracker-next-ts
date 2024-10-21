@@ -11,14 +11,10 @@ import LocaleSwitcher from "@/components/localeSwitcher";
 import ThemeSwitcher from "@/components/themeSwitcher";
 
 export default function PublicLayout({children}: LayoutPropsType): ReactElement {
-    const context: object = useContext(RootContext);
+    const context: ContextType = useContext(RootContext) as ContextType;
 
-    if(context) {
-        const ctx = context as ContextType;
-
-        if(ctx.globalState.isAuthorized) {
-            redirect(ROUTES_APP.home);
-        }
+    if(context && context.globalState.isAuthorized) {
+        redirect(ROUTES_APP.home);
     }
 
     return (

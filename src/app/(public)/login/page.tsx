@@ -10,16 +10,14 @@ import {Card, CardDescription, CardFooter, CardContent, CardHeader, CardTitle} f
 import {SvgIcons} from "@/components/svgIcons";
 import TextField from "@/components/form/textField";
 import PasswordField from "@/components/form/passwordField";
-
-type LoginFormType = {
-    email: string,
-    password: string
-};
+import useLoginPageHook, {LoginFormType, LoginPageHookType} from "@/app/(public)/login/useLoginPageHook";
+import CustomAlert from "@/components/CustomAlert";
+import CustomButton from "@/components/CustomButton";
 
 export default function LoginPage(): ReactElement {
     const t = useTranslations();
 
-    // const {handleLogin, isLoginPending, loginAlertData}: LoginHookType = useLoginHook();
+    const {handleLogin, isLoginPending, loginAlertData}: LoginPageHookType = useLoginPageHook();
 
     const initialValues: LoginFormType = {email: "", password: ""};
 
@@ -63,6 +61,8 @@ export default function LoginPage(): ReactElement {
                                         </div>
                                     </div>
 
+                                    <CustomAlert data={loginAlertData} />
+
                                     <TextField
                                         label={t("email")}
                                         name={"email"}
@@ -75,7 +75,11 @@ export default function LoginPage(): ReactElement {
                                 </CardContent>
 
                                 <CardFooter>
-                                    <Button className="w-full">{t("signIn")}</Button>
+                                    <CustomButton
+                                        className={"w-full"}
+                                        label={t("signIn")}
+                                        loading={isLoginPending}
+                                    />
                                 </CardFooter>
                             </Form>
                         )}

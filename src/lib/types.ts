@@ -1,5 +1,12 @@
-import {GlobalStateType} from "@/lib/context";
-import {DispatchWithoutAction, ReactNode} from "react";
+import {GlobalStateType, ReducerActionType} from "@/lib/context";
+import {ReactNode} from "react";
+
+export enum AlertStatusEnum {
+    INFO = "info",
+    ERROR = "error",
+    SUCCESS = "success",
+    WARNING = "warning",
+}
 
 export type LayoutPropsType = Readonly<{children: ReactNode}>;
 
@@ -14,6 +21,23 @@ export type MediaType = {
 
 export type ContextType = {
     globalState: GlobalStateType;
-    globalDispatch: DispatchWithoutAction
+    globalDispatch: (r: ReducerActionType) => void
 }
+
+export type ErrorAlertType = {
+    show: boolean,
+    status?: AlertStatusEnum,
+    message?: string
+};
+
+export type TokenType = {
+    accessToken: string,
+    refreshToken: string
+};
+
+export type URLParamType = {
+    param: string;
+    value: any;
+};
+
 

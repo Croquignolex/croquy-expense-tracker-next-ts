@@ -1,3 +1,5 @@
+"use client";
+
 import secureLocalStorage from "react-secure-storage";
 
 export const getLocaleStorageItem = (key: string): object | null => {

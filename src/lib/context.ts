@@ -1,7 +1,7 @@
 import {Context, createContext} from "react";
 
 import {MediaType} from "@/lib/types";
-import {GLOBAL_STATE_UPDATE_LOGIN_DATA, GLOBAL_STATE_CLEAR_DATA} from "@/constants/actions";
+import {globalActionTypes} from "@/constants/actions";
 
 export type GlobalStateType = {
     isAuthorized: boolean;
@@ -13,7 +13,12 @@ export type GlobalStateType = {
     avatar?: MediaType | null;
 };
 
-type ReducerActionType = {
+export type LoginActionPayloadType = {
+    firstName: string;
+    avatar?: MediaType | null;
+};
+
+export type ReducerActionType = {
     type: string;
     payload?: object;
 };
@@ -33,21 +38,20 @@ export const rootReducer = (state: GlobalStateType = initialGlobalState, action:
 
     switch (action.type) {
 
-        case GLOBAL_STATE_UPDATE_LOGIN_DATA:
-            const payload: object = action.payload;
+        case globalActionTypes.LOGIN:
+            const payload: LoginActionPayloadType = action.payload as LoginActionPayloadType;
 
             if(payload) {
                 nextState = {
                     ...state,
-                    firstName: payload?.firstName,
-                    username: payload?.username,
-                    avatar: payload?.avatar,
+                    firstName: payload.firstName,
+                    avatar: payload.avatar,
                 };
             }
 
             return nextState || state;
 
-        case GLOBAL_STATE_CLEAR_DATA:
+        case globalActionTypes.CLEAR_DATA:
             return initialGlobalState;
 
         default:
@@ -55,4 +59,4 @@ export const rootReducer = (state: GlobalStateType = initialGlobalState, action:
     }
 };
 
-export const RootContext: Context<object | null> = createContext(null);
+export const RootContext: Context<object> = createContext(null);

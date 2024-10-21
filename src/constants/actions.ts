@@ -1,2 +1,4 @@
-export const GLOBAL_STATE_UPDATE_LOGIN_DATA: string = "GLOBAL_STATE_UPDATE_LOGIN_DATA";
-export const GLOBAL_STATE_CLEAR_DATA: string = "GLOBAL_STATE_CLEAR_DATA";
+export const globalActionTypes = {
+    LOGIN: "LOGIN",
+    CLEAR_DATA: "CLEAR_DATA",
+} as const;

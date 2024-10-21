@@ -9,15 +9,9 @@ import {ContextType, LayoutPropsType} from "@/lib/types";
 import {ROUTES_APP} from "@/constants/routes";
 
 export default function ProtectedLayout({children}: LayoutPropsType): React.ReactElement {
-    const context: object = useContext(RootContext);
+    const context: ContextType = useContext(RootContext) as ContextType;
 
-    if(!context) {
-        redirect(ROUTES_APP.login);
-    }
-
-    const ctx = context as ContextType;
-
-    if(!ctx.globalState.isAuthorized) {
+    if(!context || !context.globalState.isAuthorized) {
         redirect(ROUTES_APP.login);
     }
 

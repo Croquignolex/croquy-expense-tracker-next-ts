@@ -17,19 +17,17 @@ const queryClient: QueryClient = new QueryClient({
 });
 
 const initialFunction = (initial: GlobalStateType): GlobalStateType => {
-    const persistedData: object | null = getLocaleStorageItem("user");
+    const persistedData: GlobalStateType = getLocaleStorageItem("user") as GlobalStateType;
 
     if(persistedData) {
-        const p = persistedData as GlobalStateType;
-
         return {
             isAuthorized: true,
-            emailAddress: p.emailAddress,
-            lastName: p.lastName,
-            firstName: p.firstName,
-            username: p.username,
-            phoneNumber: p.phoneNumber,
-            avatar: p.avatar,
+            emailAddress: persistedData.emailAddress,
+            lastName: persistedData.lastName,
+            firstName: persistedData.firstName,
+            username: persistedData.username,
+            phoneNumber: persistedData.phoneNumber,
+            avatar: persistedData.avatar,
         }
    } else return initial;
 };

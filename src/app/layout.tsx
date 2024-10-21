@@ -5,6 +5,7 @@ import {AbstractIntlMessages} from "use-intl";
 import {Inter} from "next/font/google";
 import clsx from "clsx";
 import {ReactElement} from "react";
+import {Toaster} from "@/components/ui/toaster";
 
 import "@/assets/css/globals.css";
 import Root from "@/app/root";
@@ -32,6 +33,7 @@ export default async function RootLayout({children}: LayoutPropsType): Promise<R
                     <Root>
                         <div className="flex min-h-[100vh] flex-col">
                             {children}
+                            <Toaster />
                         </div>
                     </Root>
                 </NextIntlClientProvider>

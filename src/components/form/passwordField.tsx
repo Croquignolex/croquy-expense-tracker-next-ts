@@ -35,7 +35,7 @@ export default function PasswordField({name, label}: PasswordFieldPropsType): Re
                                 {...field}
                                 className={clsx({
                                     "bg-transparent shadow-sm border border-input text-gray-900 text-sm rounded-md h-9 block w-full ps-10 p-2.5 dark:text-white": true,
-                                    "bg-red-100 border border-red-500 text-red-500": isInvalid
+                                    "border border-red-500 text-red-500": isInvalid
                                 })}
                                 autoComplete="on"
                             />

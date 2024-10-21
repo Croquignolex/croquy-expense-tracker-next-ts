@@ -40,7 +40,7 @@ export default function TextField(
                             placeholder={placeholder}
                             disabled={disabled}
                             {...field}
-                            className={clsx({"bg-red-100 border border-red-500 text-red-500": isInvalid})}
+                            className={clsx({"border border-red-500 text-red-500": isInvalid})}
                         />
 
                         {isInvalid && (

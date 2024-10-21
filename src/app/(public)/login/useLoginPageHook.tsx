@@ -1,78 +1,83 @@
-"use client"
+"use client";
 
-import {ReactElement} from "react";
+import {useContext, useState} from "react";
 import {useTranslations} from "next-intl";
-import {Form, Formik} from "formik";
-import * as Yup from "yup";
+import {AxiosError, AxiosResponse} from "axios";
 
-import {Button} from "@/components/ui/button";
-import {Card, CardDescription, CardFooter, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {SvgIcons} from "@/components/svgIcons";
-import TextField from "@/components/form/textField";
-import PasswordField from "@/components/form/passwordField";
+import { useToast } from "@/hooks/use-toast";
+import {ContextType, ErrorAlertType, TokenType} from "@/lib/types";
+import {LoginActionPayloadType, RootContext} from "@/lib/context";
+import {useMutation, UseMutationResult} from "@tanstack/react-query";
+import {errorAlert, log} from "@/helpers/general";
+import {setLocaleStorageItem} from "@/helpers/localStorage";
+import {globalActionTypes} from "@/constants/actions";
+import {postRequest, v1URL} from "@/helpers/request";
+import {ROUTES_API} from "@/constants/routes";
 
-export default function LoginPage(): ReactElement {
+export type LoginFormType = {
+    email: string,
+    password: string
+};
+
+type LoginRequestDataType = {
+    email: string,
+    password: string
+};
+
+export type LoginPageHookType = {
+    handleLogin: (a: LoginFormType) => void,
+    isLoginPending: boolean,
+    loginAlertData: ErrorAlertType
+};
+
+export default function useLoginPageHook(): LoginPageHookType {
+    const [loginAlertData, setLoginAlertData] = useState<ErrorAlertType>({show: false});
+
+    const {toast} = useToast();
     const t = useTranslations();
 
-    const schema: Yup.ObjectSchema<{email: string}> = Yup.object().shape({
-        email: Yup.string().required(t("login.message")),
-        email: Yup.string().required(t("login.message")),
+    const context: ContextType = useContext(RootContext) as ContextType;
+
+    const loginResponse: UseMutationResult<AxiosResponse, AxiosError, LoginRequestDataType, any> = useMutation({
+        mutationFn: ({email, password}: LoginRequestDataType): Promise<any> => {
+            const url: string = v1URL(ROUTES_API.auth.login);
+
+            return postRequest(url, {email, password}, {headers: {public: true}});
+        },
+        onError: (error: AxiosError<any>): void => {
+            const e: ErrorAlertType = errorAlert(error);
+
+            setLoginAlertData({...e, message: t(e.message)});
+
+            log("Login failure", error);
+        },
+        onSuccess: (data: AxiosResponse<any>): void => {
+            setLoginAlertData({show: false});
+
+            const {accessToken, refreshToken} = data.data as TokenType;
+            const payload: LoginActionPayloadType = data.data as LoginActionPayloadType;
+
+            setLocaleStorageItem('user', payload);
+            setLocaleStorageItem('access-token', {accessToken});
+            setLocaleStorageItem('refresh-token', {refreshToken});
+
+            context.globalDispatch({type: globalActionTypes.LOGIN, payload});
+
+            toast({
+                title: t("login.authentication"),
+                description: t("login.welcome", {firstName: payload.firstName})
+            });
+        }
     });
 
-    return (
-        <div className="w-full min-h-screen">
-            <div className="flex justify-center my-32 mx-4">
-                <Card className="w-full max-w-md">
-                    <Formik initialValues={{email: "", password: ""}} validationSchema={schema} onSubmit={(e) => console.log('login', e)}>
-                        {() => (
-                            <Form>
-                                <CardHeader>
-                                    <CardTitle className="text-2xl">{t("login.title")}</CardTitle>
-                                    <CardDescription>{t("login.message")}</CardDescription>
-                                </CardHeader>
+    const handleLogin = ({email, password}: LoginFormType): void => {
+        setLoginAlertData({show: false});
 
-                                <CardContent className="grid gap-4">
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <Button variant="outline">
-                                            <SvgIcons.gitHub className="mr-2 h-4 w-4" />
-                                            Github
-                                        </Button>
-                                        <Button variant="outline" className="text-red-500 hover:text-red-500">
-                                            <SvgIcons.google className="mr-2 h-4 w-4" />
-                                            Google
-                                        </Button>
-                                    </div>
+        loginResponse.mutate({email, password});
+    }
 
-                                    <div className="relative">
-                                        <div className="absolute inset-0 flex items-center">
-                                            <span className="w-full border-t" />
-                                        </div>
-                                        <div className="relative flex justify-center text-sm">
-                                            <span className="bg-background px-2 text-muted-foreground">
-                                              Or continue with
-                                            </span>
-                                        </div>
-                                    </div>
+    const isLoginPending: boolean = loginResponse.isPending;
 
-                                    <TextField
-                                        label={t("email")}
-                                        name={"email"}
-                                        placeholder={"account@exemple.com"}
-                                    />
-                                    <PasswordField
-                                        label={t("password")}
-                                        name={"password"}
-                                    />
-                                </CardContent>
-
-                                <CardFooter>
-                                    <Button className="w-full">{t("signIn")}</Button>
-                                </CardFooter>
-                            </Form>
-                        )}
-                    </Formik>
-                </Card>
-            </div>
-        </div>
-    );
+    return { handleLogin, isLoginPending, loginAlertData };
 };
+
