@@ -11,28 +11,19 @@ import {SvgIcons} from "@/components/svgIcons";
 import TextField from "@/components/form/textField";
 import PasswordField from "@/components/form/passwordField";
 
-type LoginFormType = {
-    email: string,
-    password: string
-};
-
 export default function LoginPage(): ReactElement {
     const t = useTranslations();
 
-    // const {handleLogin, isLoginPending, loginAlertData}: LoginHookType = useLoginHook();
-
-    const initialValues: LoginFormType = {email: "", password: ""};
-
-    const validationSchema: Yup.ObjectSchema<LoginFormType> = Yup.object().shape({
-        email: Yup.string().required(t("validation.required")),
-        password: Yup.string().required(t("validation.required")),
+    const schema: Yup.ObjectSchema<{email: string}> = Yup.object().shape({
+        email: Yup.string().required(t("login.message")),
+        email: Yup.string().required(t("login.message")),
     });
 
     return (
         <div className="w-full min-h-screen">
             <div className="flex justify-center my-32 mx-4">
                 <Card className="w-full max-w-md">
-                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleLogin}>
+                    <Formik initialValues={{email: "", password: ""}} validationSchema={schema} onSubmit={(e) => console.log('login', e)}>
                         {() => (
                             <Form>
                                 <CardHeader>

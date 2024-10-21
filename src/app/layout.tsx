@@ -27,7 +27,7 @@ export default async function RootLayout({children}: LayoutPropsType): Promise<R
 
     return (
         <html lang={locale} suppressHydrationWarning>
-            <body className={clsx("antialiased bg-accent", inter.className)}>
+            <body className={clsx("antialiased bg-auto", inter.className)}>
                 <NextIntlClientProvider messages={messages}>
                     <Root>
                         <div className="flex min-h-[100vh] flex-col">

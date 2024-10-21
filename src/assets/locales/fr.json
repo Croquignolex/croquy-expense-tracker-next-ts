@@ -1,8 +1,19 @@
 {
+    "dark": "Dark",
+    "system": "System",
+    "light": "Light",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
     "footer": {
-        "message": "Construit par <authorLink>{author}</authorLink>. Le code est disponible sur <repoLink>{repo}</repoLink>."
+        "message": "Built by <authorLink>{author}</authorLink>. The source code is available on <repoLink>{repo}</repoLink>."
     },
-    "dark": "Sombre",
-    "system": "Système",
-    "light": "Clair"
+    "login": {
+        "title": "Login",
+        "message": "Sign in with your account",
+        "divider": "Or continue with"
+    },
+    "validation": {
+        "required": "This field si required"
+    }
 }
