@@ -29,7 +29,7 @@ export default function LoginPage(): ReactElement {
 
     return (
         <div className="w-full min-h-screen">
-            <div className="flex justify-center my-32 mx-4">
+            <div className="flex justify-center my-28 mx-4">
                 <Card className="w-full max-w-md">
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleLogin}>
                         {() => (

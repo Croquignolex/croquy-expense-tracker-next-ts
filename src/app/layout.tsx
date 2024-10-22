@@ -33,7 +33,7 @@ export default async function RootLayout({children}: LayoutPropsType): Promise<R
                     <Root>
                         <div className="flex min-h-[100vh] flex-col">
                             {children}
-                            <Toaster />
+                            <Toaster position="top-center" />
                         </div>
                     </Root>
                 </NextIntlClientProvider>

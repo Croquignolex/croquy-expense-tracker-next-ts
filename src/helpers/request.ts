@@ -71,12 +71,12 @@ axiosApiInstance.interceptors.response.use((response) => {
 });
 
 // Build v1 url
-export const apiV1URL = (url: string, params?: Array<URLParamType>, queries?: Array<URLParamType>): string => {
+export function apiV1URL(url: string, params?: Array<URLParamType>, queries?: Array<URLParamType>): string {
     return joinBaseUrlWithParams(API_V1_URL + url, params, queries);
-};
+}
 
 // Build complete url
-export const joinBaseUrlWithParams = (url: string, params?: Array<URLParamType>, queries?: Array<URLParamType>): string => {
+export function joinBaseUrlWithParams(url: string, params?: Array<URLParamType>, queries?: Array<URLParamType>): string {
     if(params) {
         params.forEach((param: URLParamType): void => {
             url = url.replace(`{${param.param}}`, `${encodeURIComponent(param.value)}`);
@@ -94,24 +94,24 @@ export const joinBaseUrlWithParams = (url: string, params?: Array<URLParamType>,
     }
 
     return url;
-};
+}
 
-export const getRequest = async (url: string, config?: object) => {
+export async function getRequest(url: string, config?: object) {
     return axiosApiInstance.get(url, config);
-};
+}
 
-export const postRequest = async (url: string, data?: object, config?: object) => {
+export async function postRequest(url: string, data?: object, config?: object) {
     return axiosApiInstance.post(url, data, config);
-};
+}
 
-export const putRequest = async (url: string, data?: object, config?: object) => {
+export async function putRequest(url: string, data?: object, config?: object) {
     return axiosApiInstance.put(url, data, config);
-};
+}
 
-export const patchRequest = async (url: string, data?: object, config?: object) => {
+export async function patchRequest(url: string, data?: object, config?: object) {
     return axiosApiInstance.patch(url, data, config);
-};
+}
 
-export const deleteRequest = async (url: string, config?: object) => {
+export async function deleteRequest(url: string, config?: object) {
     return axiosApiInstance.delete(url, config);
-};
+}
