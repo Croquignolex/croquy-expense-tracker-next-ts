@@ -37,7 +37,7 @@ export type TokenType = {
 
 export type URLParamType = {
     param: string;
-    value: any;
+    value: unknown;
 };
 
 

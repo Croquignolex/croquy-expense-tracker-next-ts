@@ -3,7 +3,7 @@ import {AxiosError} from "axios";
 import {AlertStatusEnum, ErrorAlertType} from "@/lib/types";
 
 // Custom log
-export function log(message: string, data?: any): void {
+export function log(message: string, data?: object): void {
     // Only in local environment
     if (process.env.NODE_ENV !== "production") {
         console.log(`[${new Date().toLocaleString()}] ${message}`)
@@ -12,7 +12,7 @@ export function log(message: string, data?: any): void {
 }
 
 // Error alert
-export function errorAlert(error: AxiosError<any>): ErrorAlertType {
+export function errorAlert(error): ErrorAlertType {
     let message: string = "";
 
     if(error.response?.data['message']) {
