@@ -2,16 +2,15 @@
 
 import {useContext, useState} from "react";
 import {useTranslations} from "next-intl";
-import {AxiosError, AxiosResponse} from "axios";
 
 import { useToast } from "@/hooks/use-toast";
 import {ContextType, ErrorAlertType, TokenType} from "@/lib/types";
 import {LoginActionPayloadType, RootContext} from "@/lib/context";
-import {useMutation, UseMutationResult} from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import {errorAlert, log} from "@/helpers/general";
 import {setLocaleStorageItem} from "@/helpers/localStorage";
 import {globalActionTypes} from "@/constants/actions";
-import {postRequest, v1URL} from "@/helpers/request";
+import {postRequest, apiV1URL} from "@/helpers/request";
 import {ROUTES_API} from "@/constants/routes";
 
 export type LoginFormType = {
@@ -38,20 +37,20 @@ export default function useLoginPageHook(): LoginPageHookType {
 
     const context: ContextType = useContext(RootContext) as ContextType;
 
-    const loginResponse: UseMutationResult<AxiosResponse, AxiosError, LoginRequestDataType, any> = useMutation({
-        mutationFn: ({email, password}: LoginRequestDataType): Promise<any> => {
-            const url: string = v1URL(ROUTES_API.auth.login);
+    const loginResponse = useMutation({
+        mutationFn: ({email, password}: LoginRequestDataType) => {
+            const url: string = apiV1URL(ROUTES_API.auth.login);
 
             return postRequest(url, {email, password}, {headers: {public: true}});
         },
-        onError: (error: AxiosError<any>): void => {
+        onError: (error): void => {
             const e: ErrorAlertType = errorAlert(error);
 
             setLoginAlertData({...e, message: t(e.message)});
 
             log("Login failure", error);
         },
-        onSuccess: (data: AxiosResponse<any>): void => {
+        onSuccess: (data): void => {
             setLoginAlertData({show: false});
 
             const {accessToken, refreshToken} = data.data as TokenType;

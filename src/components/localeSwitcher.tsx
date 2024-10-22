@@ -13,7 +13,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-export default function LocaleSwitcher() {
+export default function LocaleSwitcher(): ReactElement {
     const locale: string = useLocale();
 
     const supportedLocales: Array<{code: string, label: string}> = [

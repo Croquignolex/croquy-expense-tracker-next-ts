@@ -4,6 +4,7 @@ import {ReactElement} from "react";
 import {useTranslations} from "next-intl";
 import {Form, Formik} from "formik";
 import * as Yup from "yup";
+import {LayoutDashboard} from "lucide-react";
 
 import {Button} from "@/components/ui/button";
 import {Card, CardDescription, CardFooter, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
@@ -34,7 +35,10 @@ export default function LoginPage(): ReactElement {
                         {() => (
                             <Form>
                                 <CardHeader>
-                                    <CardTitle className="text-2xl">{t("login.title")}</CardTitle>
+                                    <CardTitle className="text-2xl">
+                                        <LayoutDashboard className="m-auto mb-2 size-10" />
+                                        {t("login.title")}
+                                    </CardTitle>
                                     <CardDescription>{t("login.message")}</CardDescription>
                                 </CardHeader>
 

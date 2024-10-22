@@ -13,7 +13,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-export default function ThemeSwitcher() {
+export default function ThemeSwitcher(): ReactElement {
     const { setTheme, theme } = useTheme();
     const t = useTranslations();
 

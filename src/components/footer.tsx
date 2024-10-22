@@ -2,10 +2,11 @@
 
 import {useTranslations} from "next-intl";
 import clsx from 'clsx';
+import {ReactElement} from "react";
 
 import {ENV_APP} from "@/constants/configs";
 
-export default function Footer({absolute = false} : {absolute?: boolean}) {
+export default function Footer({absolute = false} : {absolute?: boolean}): ReactElement {
     const t = useTranslations();
 
     return (
