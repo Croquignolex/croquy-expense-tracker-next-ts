@@ -2,8 +2,9 @@ import {ReactElement} from "react";
 import {useTranslations} from "next-intl";
 import {AlertCircle, Info} from "lucide-react";
 
-import {AlertStatusEnum, ErrorAlertType} from "@/lib/types";
+import {ErrorAlertType} from "@/lib/types";
 import {AlertDescription, AlertTitle, Alert} from "@/components/ui/alert";
+import {AlertStatusEnum} from "@/lib/enums";
 
 type CustomAlertPropsType = {
     data: ErrorAlertType,

@@ -20,10 +20,10 @@ export default function LoginPage(): ReactElement {
 
     const {handleLogin, isLoginPending, loginAlertData}: LoginPageHookType = useLoginPageHook();
 
-    const initialValues: LoginFormType = {email: "", password: ""};
+    const initialValues: LoginFormType = {username: "", password: ""};
 
     const validationSchema: Yup.ObjectSchema<LoginFormType> = Yup.object().shape({
-        email: Yup.string().required(t("validation.required")),
+        username: Yup.string().required(t("validation.required")),
         password: Yup.string().required(t("validation.required")),
     });
 
@@ -68,9 +68,9 @@ export default function LoginPage(): ReactElement {
                                     <CustomAlert data={loginAlertData} />
 
                                     <TextField
-                                        label={t("email")}
-                                        name={"email"}
-                                        placeholder={"account@exemple.com"}
+                                        label={t("username")}
+                                        name={"username"}
+                                        placeholder={"Croquextra"}
                                     />
                                     <PasswordField
                                         label={t("password")}

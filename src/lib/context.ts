@@ -2,6 +2,7 @@ import {Context, createContext} from "react";
 
 import {MediaType} from "@/lib/types";
 import {globalActionTypes} from "@/constants/actions";
+import {RoleEnum} from "@/lib/enums";
 
 export type GlobalStateType = {
     isAuthorized: boolean;
@@ -10,11 +11,14 @@ export type GlobalStateType = {
     phoneNumber: string;
     firstName: string;
     username: string;
+    role?: RoleEnum | null;
     avatar?: MediaType | null;
 };
 
 export type LoginActionPayloadType = {
     firstName: string;
+    username: string;
+    role: RoleEnum;
     avatar?: MediaType | null;
 };
 
@@ -31,6 +35,7 @@ export const initialGlobalState: GlobalStateType = {
     username: "",
     phoneNumber: "",
     avatar: null,
+    role: null,
 };
 
 export const rootReducer = (state: GlobalStateType = initialGlobalState, action: ReducerActionType): GlobalStateType => {
@@ -45,6 +50,8 @@ export const rootReducer = (state: GlobalStateType = initialGlobalState, action:
                 nextState = {
                     ...state,
                     firstName: payload.firstName,
+                    username: payload.username,
+                    role: payload.role,
                     avatar: payload.avatar,
                 };
             }

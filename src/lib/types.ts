@@ -1,12 +1,7 @@
-import {GlobalStateType, ReducerActionType} from "@/lib/context";
 import {ReactNode} from "react";
 
-export enum AlertStatusEnum {
-    INFO = "info",
-    ERROR = "error",
-    SUCCESS = "success",
-    WARNING = "warning",
-}
+import {GlobalStateType, ReducerActionType} from "@/lib/context";
+import {AlertStatusEnum} from "@/lib/enums";
 
 export type LayoutPropsType = Readonly<{children: ReactNode}>;
 

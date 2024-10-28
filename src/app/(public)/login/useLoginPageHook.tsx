@@ -2,6 +2,7 @@
 
 import {useContext, useState} from "react";
 import {useTranslations} from "next-intl";
+import {redirect} from "next/navigation";
 
 import { useToast } from "@/hooks/use-toast";
 import {ContextType, ErrorAlertType, TokenType} from "@/lib/types";
@@ -11,15 +12,15 @@ import {errorAlert, log} from "@/helpers/general";
 import {setLocaleStorageItem} from "@/helpers/localStorage";
 import {globalActionTypes} from "@/constants/actions";
 import {postRequest, apiV1URL} from "@/helpers/request";
-import {ROUTES_API} from "@/constants/routes";
+import {ROUTES_API, ROUTES_APP} from "@/constants/routes";
 
 export type LoginFormType = {
-    email: string,
+    username: string,
     password: string
 };
 
 type LoginRequestDataType = {
-    email: string,
+    username: string,
     password: string
 };
 
@@ -38,10 +39,10 @@ export default function useLoginPageHook(): LoginPageHookType {
     const context: ContextType = useContext(RootContext) as ContextType;
 
     const loginResponse = useMutation({
-        mutationFn: ({email, password}: LoginRequestDataType) => {
+        mutationFn: ({username, password}: LoginRequestDataType) => {
             const url: string = apiV1URL(ROUTES_API.auth.login);
 
-            return postRequest(url, {email, password}, {headers: {public: true}});
+            return postRequest(url, {username, password}, {headers: {public: true}});
         },
         onError: (error): void => {
             const e: ErrorAlertType = errorAlert(error);
@@ -66,13 +67,16 @@ export default function useLoginPageHook(): LoginPageHookType {
                 title: t("login.authentication"),
                 description: t("login.welcome", {firstName: payload.firstName})
             });
+
+            redirect(ROUTES_APP.home);
+            console.log('redirection')
         }
     });
 
-    const handleLogin = ({email, password}: LoginFormType): void => {
+    const handleLogin = ({username, password}: LoginFormType): void => {
         setLoginAlertData({show: false});
 
-        loginResponse.mutate({email, password});
+        loginResponse.mutate({username, password});
     }
 
     const isLoginPending: boolean = loginResponse.isPending;

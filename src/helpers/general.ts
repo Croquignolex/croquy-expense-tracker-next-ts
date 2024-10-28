@@ -1,6 +1,7 @@
 import {AxiosError} from "axios";
 
-import {AlertStatusEnum, ErrorAlertType} from "@/lib/types";
+import {ErrorAlertType} from "@/lib/types";
+import {AlertStatusEnum} from "@/lib/enums";
 
 // Custom log
 export function log(message: string, data?: object): void {
@@ -17,6 +18,9 @@ export function errorAlert(error): ErrorAlertType {
 
     if(error.response?.data['message']) {
         message = error.response.data['message'];
+    }
+    else if(error.message) {
+        message = error.message;
     } else {
         switch (error.code) {
             case AxiosError.ERR_FR_TOO_MANY_REDIRECTS: message = "ERR_FR_TOO_MANY_REDIRECTS"; break;
