@@ -2,7 +2,6 @@
 
 import {ReactElement, useReducer} from "react";
 import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
-import {ThemeProvider} from "next-themes";
 
 import {initialGlobalState, rootReducer, RootContext, GlobalStateType} from "@/lib/context";
 import {getLocaleStorageItem} from "@/helpers/localStorage";
@@ -37,12 +36,10 @@ export default function Root({children}: LayoutPropsType): ReactElement  {
     const [globalState, globalDispatch] = useReducer(rootReducer, initialGlobalState, initialFunction);
 
     return (
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <QueryClientProvider client={queryClient}>
-                <RootContext.Provider value={{globalState, globalDispatch}}>
-                    {children}
-                </RootContext.Provider>
-            </QueryClientProvider>
-        </ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+            <RootContext.Provider value={{globalState, globalDispatch}}>
+                {children}
+            </RootContext.Provider>
+        </QueryClientProvider>
     );
 }

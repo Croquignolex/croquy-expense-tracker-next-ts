@@ -5,11 +5,12 @@ import {AbstractIntlMessages} from "use-intl";
 import {Inter} from "next/font/google";
 import clsx from "clsx";
 import {ReactElement} from "react";
-import {Toaster} from "@/components/ui/toaster";
 
+import {Toaster} from "@/components/ui/toaster";
 import "@/assets/css/globals.css";
 import Root from "@/app/root";
 import {LayoutPropsType} from "@/lib/types";
+import {ThemeProvider} from "next-themes";
 
 const inter = Inter({subsets: ['latin']});
 
@@ -30,12 +31,14 @@ export default async function RootLayout({children}: LayoutPropsType): Promise<R
         <html lang={locale} suppressHydrationWarning>
             <body className={clsx("antialiased bg-auto", inter.className)}>
                 <NextIntlClientProvider messages={messages}>
-                    <Root>
-                        <div className="flex min-h-[100vh] flex-col">
-                            {children}
-                            <Toaster position="top-center" />
-                        </div>
-                    </Root>
+                    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+                        <Root>
+                            <div className="flex min-h-[100vh] flex-col">
+                                {children}
+                                <Toaster position="top-center" />
+                            </div>
+                        </Root>
+                    </ThemeProvider>
                 </NextIntlClientProvider>
             </body>
         </html>
