@@ -1,12 +1,19 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { cookies } from "next/headers";
+import {redirect} from "@/middlewares/redirect";
+import {NextMiddleware, NextResponse} from "next/server";
 
-const loggedInRoutes = ["/dashboard"];
-const loggedOutRoutes = ["/login"];
+export type MiddlewareFactory = (middleware: NextMiddleware) => NextMiddleware;
 
-export default async function AuthMiddleware(req: NextRequest): Promise<NextResponse> {
-    console.log('into middleware')
+function stackMiddlewares(functions: Array<MiddlewareFactory> = [], index: number = 0): NextMiddleware {
+    const current = functions[index];
 
-    return NextResponse.next();
+    if (current) {
+        const next = stackMiddlewares(functions, index + 1);
+        return current(next);
+    }
+
+    return () => NextResponse.next();
 }
+
+export default stackMiddlewares([
+    redirect
+]);
