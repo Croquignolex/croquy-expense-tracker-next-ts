@@ -4,16 +4,16 @@ import {ErrorAlertType} from "@/lib/types";
 import {AlertStatusEnum} from "@/lib/enums";
 
 // Custom log
-export function log(message: string, data?: object): void {
+export const log = (message: string, data?: object): void => {
     // Only in local environment
     if (process.env.NODE_ENV !== "production") {
         console.log(`[${new Date().toLocaleString()}] ${message}`)
         console.info({data})
     }
-}
+};
 
 // Error alert
-export function errorAlert(error): ErrorAlertType {
+export const errorAlert = (error): ErrorAlertType => {
     let message: string = "";
 
     if(error.response?.data['message']) {
@@ -39,19 +39,19 @@ export function errorAlert(error): ErrorAlertType {
     }
 
     return {show: true, status: AlertStatusEnum.ERROR, message};
-}
+};
 
 // Generate random UUID
-export function generateUUID(): string {
+export const generateUUID = (): string => {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c: string) {
         const r: number = (Math.random() * 16) | 0;
         const v: number = c === "x" ? r : (r & 0x3) | 0x8;
         return v.toString(16);
     });
-}
+};
 
 // Get timezone name
-export function timezoneName(): string {
+export const timezoneName = (): string => {
     const tmSummer: Date = new Date(Date.UTC(2005, 6, 30, 0, 0, 0, 0));
     const so: number = -1 * tmSummer.getTimezoneOffset();
     const tmWinter: Date = new Date(Date.UTC(2005, 12, 30, 0, 0, 0, 0));
@@ -123,4 +123,4 @@ export function timezoneName(): string {
     if(780 === so && 780 === wo) return "Pacific/Enderbury";
     if(840 === so && 840 === wo) return "Pacific/Kiritimati";
     return "UTC";
-}
+};

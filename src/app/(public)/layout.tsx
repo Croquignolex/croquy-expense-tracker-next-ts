@@ -1,11 +1,9 @@
-"use client"
-
 import {ReactElement} from "react";
 
-import Footer from "@/components/footer";
+import {Footer} from "@/components/footer";
 import {LayoutPropsType} from "@/lib/types";
-import LocaleSwitcher from "@/components/localeSwitcher";
-import ThemeSwitcher from "@/components/themeSwitcher";
+import {LocaleSwitcher} from "@/components/localeSwitcher";
+import {ThemeSwitcher} from "@/components/themeSwitcher";
 
 export default function PublicLayout({children}: LayoutPropsType): ReactElement {
     return (

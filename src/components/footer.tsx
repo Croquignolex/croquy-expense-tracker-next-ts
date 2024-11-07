@@ -1,12 +1,14 @@
-"use client"
-
 import {useTranslations} from "next-intl";
 import clsx from 'clsx';
-import {ReactElement} from "react";
+import {FC, ReactElement} from "react";
 
 import {ENV_APP} from "@/constants/configs";
 
-export default function Footer({absolute = false} : {absolute?: boolean}): ReactElement {
+type FooterPropsType = {
+    absolute?: boolean,
+};
+
+const Footer: FC<FooterPropsType> = ({absolute = false}): ReactElement => {
     const t = useTranslations();
 
     return (
@@ -15,7 +17,7 @@ export default function Footer({absolute = false} : {absolute?: boolean}): React
                 dangerouslySetInnerHTML={{
                     __html: t.markup("footer.message", {
                         authorLink: (chunks: string): string => (`
-                            <a href="${ENV_APP.authorUrl}" 
+                            <a href="${ENV_APP.AUTHOR_URL}" 
                                 target="_blank"
                                 rel="noreferrer"
                                 class="font-medium underline underline-offset-4"
@@ -24,7 +26,7 @@ export default function Footer({absolute = false} : {absolute?: boolean}): React
                             </a>
                         `),
                         repoLink: (chunks: string): string => (`
-                            <a href="${ENV_APP.repoUrl}" 
+                            <a href="${ENV_APP.REPO_URL}" 
                                 target="_blank"
                                 rel="noreferrer"
                                 class="font-medium underline underline-offset-4"
@@ -32,11 +34,13 @@ export default function Footer({absolute = false} : {absolute?: boolean}): React
                                 ${chunks}
                             </a>
                         `),
-                        author: ENV_APP.author,
-                        repo: ENV_APP.repo
+                        author: ENV_APP.AUTHOR,
+                        repo: ENV_APP.REPO
                     })
                 }}
             />
         </footer>
     );
 };
+
+export {Footer};

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {ReactElement} from "react";
 import {useLocale} from "next-intl";
@@ -13,7 +13,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-export default function LocaleSwitcher(): ReactElement {
+const LocaleSwitcher = (): ReactElement => {
     const locale: string = useLocale();
 
     const supportedLocales: Array<{code: string, label: string}> = [
@@ -35,7 +35,7 @@ export default function LocaleSwitcher(): ReactElement {
                     <DropdownMenuCheckboxItem
                         key={index}
                         checked={code === locale}
-                        onCheckedChange={async () => await setUserLocale(code)}
+                        onCheckedChange={async (): Promise<void> => await setUserLocale(code)}
                     >
                         {label}
                     </DropdownMenuCheckboxItem>
@@ -44,3 +44,5 @@ export default function LocaleSwitcher(): ReactElement {
         </DropdownMenu>
     );
 };
+
+export {LocaleSwitcher};

@@ -1,8 +1,6 @@
-"use client";
-
 import axios, {AxiosInstance} from "axios";
 
-import {getLocaleStorageItem, removeAllLocaleStorageItems, setLocaleStorageItem} from "@/helpers/localStorage";
+import {getLocaleStorageItem, removeAllLocaleStorageItems, setLocaleStorageItem} from "@/helpers/persist";
 import {TokenType, URLParamType} from "@/lib/types";
 import {LoginActionPayloadType} from "@/lib/context";
 import {ROUTES_API} from "@/constants/routes";

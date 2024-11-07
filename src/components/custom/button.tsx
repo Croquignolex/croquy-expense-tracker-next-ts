@@ -1,4 +1,4 @@
-import {ReactElement} from "react";
+import {FC, ReactElement} from "react";
 import {Loader2} from "lucide-react";
 
 import {Button} from "@/components/ui/button";
@@ -9,15 +9,15 @@ type CustomButtonPropsType = {
     loading?: boolean,
     label: string,
     type?: "submit" | "reset" | "button" | undefined,
-}
+};
 
-export default function CustomButton({
+const CustomButton: FC<CustomButtonPropsType> = ({
      className,
      label,
      type = "submit",
      disabled = false,
      loading = false,
-}: CustomButtonPropsType): ReactElement {
+}): ReactElement => {
     return (
         <Button className={className} disabled={disabled || loading} type={type}>
             {loading && <Loader2 className="mr-2 size-4 animate-spin" />}
@@ -25,3 +25,5 @@ export default function CustomButton({
         </Button>
     );
 };
+
+export {CustomButton};

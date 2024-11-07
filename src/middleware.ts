@@ -3,7 +3,7 @@ import {NextMiddleware, NextResponse} from "next/server";
 
 export type MiddlewareFactory = (middleware: NextMiddleware) => NextMiddleware;
 
-function stackMiddlewares(functions: Array<MiddlewareFactory> = [], index: number = 0): NextMiddleware {
+const stackMiddlewares = (functions: Array<MiddlewareFactory> = [], index: number = 0): NextMiddleware => {
     const current = functions[index];
 
     if (current) {
@@ -12,7 +12,7 @@ function stackMiddlewares(functions: Array<MiddlewareFactory> = [], index: numbe
     }
 
     return () => NextResponse.next();
-}
+};
 
 export default stackMiddlewares([
     redirect

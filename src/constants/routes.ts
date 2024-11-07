@@ -1,13 +1,11 @@
 export const ROUTES_APP = {
-    login: "/login",
-    home: "/home",
+    LOGIN: "/login",
+    HOME: "/home",
 } as const;
 
 export const ROUTES_API = {
-    auth: {
-        login: "/auth/login",
-        refresh: "/auth/refresh",
-    }
+    AUTH: {
+        LOGIN: "/auth/login",
+        REFRESH: "/auth/refresh",
+    },
 } as const;
-
-

@@ -1,5 +1,3 @@
-"use client"
-
 import {ReactElement, useContext} from "react";
 
 import {ContextType} from "@/lib/types";

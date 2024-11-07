@@ -5,12 +5,12 @@ import {AbstractIntlMessages} from "use-intl";
 import {Inter} from "next/font/google";
 import clsx from "clsx";
 import {ReactElement} from "react";
+import {ThemeProvider} from "next-themes";
 
 import {Toaster} from "@/components/ui/toaster";
-import "@/assets/css/globals.css";
-import Root from "@/app/root";
 import {LayoutPropsType} from "@/lib/types";
-import {ThemeProvider} from "next-themes";
+import "@/assets/css/globals.css";
+import {ClientProvider} from "@/lib/provider";
 
 const inter = Inter({subsets: ['latin']});
 
@@ -32,12 +32,12 @@ export default async function RootLayout({children}: LayoutPropsType): Promise<R
             <body className={clsx("antialiased bg-auto", inter.className)}>
                 <NextIntlClientProvider messages={messages}>
                     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                        <Root>
+                        <ClientProvider>
                             <div className="flex min-h-[100vh] flex-col">
-                                {children}
                                 <Toaster position="top-center" />
+                                {children}
                             </div>
-                        </Root>
+                        </ClientProvider>
                     </ThemeProvider>
                 </NextIntlClientProvider>
             </body>

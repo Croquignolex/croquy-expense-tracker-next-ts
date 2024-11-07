@@ -9,7 +9,7 @@ import {ContextType, ErrorAlertType, TokenType} from "@/lib/types";
 import {LoginActionPayloadType, RootContext} from "@/lib/context";
 import {useMutation} from "@tanstack/react-query";
 import {errorAlert, log} from "@/helpers/general";
-import {setLocaleStorageItem} from "@/helpers/localStorage";
+import {setLocaleStorageItem} from "@/helpers/persist";
 import {globalActionTypes} from "@/constants/actions";
 import {postRequest, apiV1URL} from "@/helpers/request";
 import {ROUTES_API, ROUTES_APP} from "@/constants/routes";

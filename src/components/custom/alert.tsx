@@ -1,4 +1,4 @@
-import {ReactElement} from "react";
+import {FC, ReactElement} from "react";
 import {useTranslations} from "next-intl";
 import {AlertCircle, Info} from "lucide-react";
 
@@ -8,9 +8,9 @@ import {AlertStatusEnum} from "@/lib/enums";
 
 type CustomAlertPropsType = {
     data: ErrorAlertType,
-}
+};
 
-export default function CustomAlert({data}: CustomAlertPropsType): ReactElement | null {
+const CustomAlert: FC<CustomAlertPropsType> = ({data}): ReactElement | null => {
     const {show, status, message} = data;
 
     const t = useTranslations();
@@ -45,3 +45,5 @@ export default function CustomAlert({data}: CustomAlertPropsType): ReactElement 
         </Alert>
     );
 };
+
+export {CustomAlert};

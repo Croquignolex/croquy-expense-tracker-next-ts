@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {ReactElement} from "react";
 import {useTheme} from "next-themes";
@@ -13,7 +13,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-export default function ThemeSwitcher(): ReactElement {
+const ThemeSwitcher = (): ReactElement => {
     const { setTheme, theme } = useTheme();
     const t = useTranslations();
 
@@ -45,3 +45,5 @@ export default function ThemeSwitcher(): ReactElement {
         </DropdownMenu>
     );
 };
+
+export {ThemeSwitcher};

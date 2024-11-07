@@ -1,10 +1,10 @@
 "use client";
 
-import {ReactElement, useReducer} from "react";
+import {FC, ReactElement, useReducer} from "react";
 import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
 
 import {initialGlobalState, rootReducer, RootContext, GlobalStateType} from "@/lib/context";
-import {getLocaleStorageItem} from "@/helpers/localStorage";
+import {getLocaleStorageItem} from "@/helpers/persist";
 import {LayoutPropsType} from "@/lib/types";
 
 const queryClient: QueryClient = new QueryClient({
@@ -32,7 +32,7 @@ const initialFunction = (initial: GlobalStateType): GlobalStateType => {
    } else return initial;
 };
 
-export default function Root({children}: LayoutPropsType): ReactElement  {
+const ClientProvider: FC<LayoutPropsType> = ({children}): ReactElement => {
     const [globalState, globalDispatch] = useReducer(rootReducer, initialGlobalState, initialFunction);
 
     return (
@@ -42,4 +42,6 @@ export default function Root({children}: LayoutPropsType): ReactElement  {
             </RootContext.Provider>
         </QueryClientProvider>
     );
-}
+};
+
+export {ClientProvider};

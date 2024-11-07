@@ -1,7 +1,7 @@
 import {Context, createContext} from "react";
 
 import {MediaType} from "@/lib/types";
-import {globalActionTypes} from "@/constants/actions";
+import {GLOBAL_ACTION_TYPES} from "@/constants/actions";
 import {RoleEnum} from "@/lib/enums";
 
 export type GlobalStateType = {
@@ -43,7 +43,7 @@ export const rootReducer = (state: GlobalStateType = initialGlobalState, action:
 
     switch (action.type) {
 
-        case globalActionTypes.LOGIN:
+        case GLOBAL_ACTION_TYPES.LOGIN:
             const payload: LoginActionPayloadType = action.payload as LoginActionPayloadType;
 
             if(payload) {
@@ -58,7 +58,7 @@ export const rootReducer = (state: GlobalStateType = initialGlobalState, action:
 
             return nextState || state;
 
-        case globalActionTypes.CLEAR_DATA:
+        case GLOBAL_ACTION_TYPES.CLEAR_DATA:
             return initialGlobalState;
 
         default:
