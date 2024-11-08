@@ -1,10 +1,9 @@
 "use client"
 
-import {ReactElement, useActionState} from "react";
+import {ReactElement} from "react";
 import {useTranslations} from "next-intl";
 import {LayoutDashboard} from "lucide-react";
-import {parseWithZod} from "@conform-to/zod";
-import {useForm} from "@conform-to/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {Button} from "@/components/ui/button";
 import {Card, CardDescription, CardContent, CardHeader, CardTitle, CardFooter} from "@/components/ui/card";
@@ -13,27 +12,30 @@ import {loginAction, loginSchema} from "@/app/(public)/login/action";
 import {TextInput} from "@/components/input/text";
 import {PasswordInput} from "@/components/input/password";
 import {CustomButton} from "@/components/custom/button";
+import clsx from "clsx";
+import {Input} from "@/components/ui/input";
+import {useForm, Controller } from "react-hook-form";
+
+type FormData = {
+    username: string;
+};
 
 export default function LoginPage(): ReactElement {
     const t = useTranslations();
-    const [lastResult, action] = useActionState(loginAction, undefined);
 
-    const [form, fields] = useForm({
-        lastResult,
-
-        onValidate({ formData }) {
-            return parseWithZod(formData, { schema: loginSchema });
+    const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
+        mode: "all",
+        defaultValues: {
+            username: "bonjpour"
         },
-
-        shouldValidate: 'onBlur',
-        shouldRevalidate: 'onInput',
+        resolver: zodResolver(loginSchema),
     });
 
     return (
         <div className="w-full min-h-screen">
             <div className="flex justify-center my-28 mx-4">
                 <Card className="w-full max-w-md">
-                    <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate>
+                    <form onSubmit={handleSubmit(loginAction)}>
                         <CardHeader>
                             <CardTitle className="text-2xl">
                                 <LayoutDashboard className="m-auto mb-2 size-10" />
@@ -67,15 +69,44 @@ export default function LoginPage(): ReactElement {
 
                             {/*<CustomAlert data={loginAlertData} />*/}
 
-                            <TextInput
+                            <Controller
+                                name="username"
+                                control={control}
+                                render={({ field }) => {
+                                    console.log({field})
+                                    console.log("errors.username", errors.username)
+                                    const isInvalid = !!errors.username
+
+                                    return (
+                                        <>
+                                            <Input
+                                                // type={type}
+                                                // placeholder={placeholder}
+                                                id={field.name}
+                                                name={field.name}
+                                                onChange={field.onChange}
+                                                onBlur={field.onBlur}
+                                                ref={field.ref}
+                                                value={field.value}
+                                                className={clsx({"border border-red-500 text-red-500": isInvalid})}
+                                            />
+
+                                            {isInvalid && (
+                                                <p className="text-red-500 text-sm">{errors.username.message}</p>
+                                            )}
+                                        </>
+                                    )
+                                }}
+                            />
+                           {/* <TextInput
                                 label={t("username")}
                                 field={fields.username}
                                 placeholder={"Croquextra"}
-                            />
-                            <PasswordInput
+                            />*/}
+                            {/*<PasswordInput
                                 label={t("password")}
                                 field={fields.password}
-                            />
+                            />*/}
                         </CardContent>
 
                         <CardFooter>
