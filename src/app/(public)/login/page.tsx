@@ -4,30 +4,22 @@ import {ReactElement} from "react";
 import {useTranslations} from "next-intl";
 import {LayoutDashboard} from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {useForm} from "react-hook-form";
 
 import {Button} from "@/components/ui/button";
 import {Card, CardDescription, CardContent, CardHeader, CardTitle, CardFooter} from "@/components/ui/card";
 import {SvgIcons} from "@/components/svgIcons";
-import {loginAction, loginSchema} from "@/app/(public)/login/action";
+import {loginAction, loginDefaultValues, LoginFormData, loginSchema} from "@/app/(public)/login/action";
 import {TextInput} from "@/components/input/text";
 import {PasswordInput} from "@/components/input/password";
 import {CustomButton} from "@/components/custom/button";
-import clsx from "clsx";
-import {Input} from "@/components/ui/input";
-import {useForm, Controller } from "react-hook-form";
-
-type FormData = {
-    username: string;
-};
 
 export default function LoginPage(): ReactElement {
     const t = useTranslations();
 
-    const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
+    const { control, handleSubmit } = useForm<LoginFormData>({
         mode: "all",
-        defaultValues: {
-            username: "bonjpour"
-        },
+        defaultValues: loginDefaultValues,
         resolver: zodResolver(loginSchema),
     });
 
@@ -69,44 +61,18 @@ export default function LoginPage(): ReactElement {
 
                             {/*<CustomAlert data={loginAlertData} />*/}
 
-                            <Controller
-                                name="username"
+                            <TextInput
                                 control={control}
-                                render={({ field }) => {
-                                    console.log({field})
-                                    console.log("errors.username", errors.username)
-                                    const isInvalid = !!errors.username
-
-                                    return (
-                                        <>
-                                            <Input
-                                                // type={type}
-                                                // placeholder={placeholder}
-                                                id={field.name}
-                                                name={field.name}
-                                                onChange={field.onChange}
-                                                onBlur={field.onBlur}
-                                                ref={field.ref}
-                                                value={field.value}
-                                                className={clsx({"border border-red-500 text-red-500": isInvalid})}
-                                            />
-
-                                            {isInvalid && (
-                                                <p className="text-red-500 text-sm">{errors.username.message}</p>
-                                            )}
-                                        </>
-                                    )
-                                }}
-                            />
-                           {/* <TextInput
                                 label={t("username")}
-                                field={fields.username}
+                                name={"username"}
                                 placeholder={"Croquextra"}
-                            />*/}
-                            {/*<PasswordInput
+                            />
+
+                            <PasswordInput
+                                control={control}
                                 label={t("password")}
-                                field={fields.password}
-                            />*/}
+                                name={"password"}
+                            />
                         </CardContent>
 
                         <CardFooter>

@@ -1,14 +1,24 @@
 import { z } from 'zod';
 
+export type LoginFormData = {
+    username: string;
+    password: string;
+};
+
+export const loginDefaultValues: LoginFormData = {
+    username: "",
+    password: "",
+};
+
 export const loginSchema = z.object({
     username: z.preprocess(
         (value) => (value === '' ? undefined : value),
-        z.string({ message: 'username is required2' }),
+        z.string({ message: "validation.required" }),
     ),
-    /*password: z.preprocess(
+    password: z.preprocess(
         (value) => (value === '' ? undefined : value),
-        z.string({ message: 'password is required' }),
-    ),*/
+        z.string({ message: "validation.required" }),
+    ),
 });
 
 export async function loginAction(data) {
