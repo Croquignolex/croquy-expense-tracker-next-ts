@@ -1,41 +1,19 @@
 import {Context, createContext} from "react";
 
-import {MediaType} from "@/lib/types";
-import {GLOBAL_ACTION_TYPES} from "@/constants/actions";
-import {RoleEnum} from "@/lib/enums";
-
-export type GlobalStateType = {
-    isAuthorized: boolean;
-    lastName: string;
-    emailAddress: string;
-    phoneNumber: string;
-    firstName: string;
-    username: string;
-    role?: RoleEnum | null;
-    avatar?: MediaType | null;
-};
-
-export type LoginActionPayloadType = {
-    firstName: string;
-    username: string;
-    role: RoleEnum;
-    avatar?: MediaType | null;
-};
-
-export type ReducerActionType = {
-    type: string;
-    payload?: object;
-};
+import {GlobalStateType, ReducerActionType, UserType} from "@/lib/types";
+import {ACTION_TYPES} from "@/constants/actions";
 
 export const initialGlobalState: GlobalStateType = {
-    isAuthorized: false,
-    emailAddress: "",
-    lastName: "",
-    firstName: "",
-    username: "",
-    phoneNumber: "",
-    avatar: null,
-    role: null,
+    user: {
+        isAuthorized: false,
+        emailAddress: "",
+        lastName: "",
+        firstName: "",
+        username: "",
+        phoneNumber: "",
+        avatar: null,
+        role: null,
+    }
 };
 
 export const rootReducer = (state: GlobalStateType = initialGlobalState, action: ReducerActionType): GlobalStateType => {
@@ -43,22 +21,28 @@ export const rootReducer = (state: GlobalStateType = initialGlobalState, action:
 
     switch (action.type) {
 
-        case GLOBAL_ACTION_TYPES.LOGIN:
-            const payload: LoginActionPayloadType = action.payload as LoginActionPayloadType;
+        case ACTION_TYPES.LOGIN:
+            const payload: UserType = action.payload as UserType;
 
             if(payload) {
                 nextState = {
                     ...state,
-                    firstName: payload.firstName,
-                    username: payload.username,
-                    role: payload.role,
-                    avatar: payload.avatar,
+                   user: {
+                        ...state.user,
+                       firstName: payload.firstName,
+                       lastName: payload.lastName,
+                       username: payload.username,
+                       emailAddress: payload.emailAddress,
+                       phoneNumber: payload.phoneNumber,
+                       role: payload.role,
+                       avatar: payload.avatar,
+                   }
                 };
             }
 
             return nextState || state;
 
-        case GLOBAL_ACTION_TYPES.CLEAR_DATA:
+        case ACTION_TYPES.CLEAR_DATA:
             return initialGlobalState;
 
         default:

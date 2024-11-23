@@ -1,4 +1,4 @@
-import {getCookieItem, setCookieIItem} from "@/helpers/cookies";
+import {getCookieItem, setCookieIItem} from "@/lib/cookies";
 
 const COOKIE_NAME: string = "NEXT_LOCALE";
 const DEFAULT_LOCALE: string = "en";

@@ -9,8 +9,9 @@ import {ThemeProvider} from "next-themes";
 
 import {Toaster} from "@/components/ui/toaster";
 import {LayoutPropsType} from "@/lib/types";
+import {ClientProvider} from "@/app/provider";
+
 import "@/assets/css/globals.css";
-import {ClientProvider} from "@/lib/provider";
 
 const inter = Inter({subsets: ['latin']});
 
@@ -34,7 +35,7 @@ export default async function RootLayout({children}: LayoutPropsType): Promise<R
                     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                         <ClientProvider>
                             <div className="flex min-h-[100vh] flex-col">
-                                <Toaster position="top-center" />
+                                <Toaster />
                                 {children}
                             </div>
                         </ClientProvider>

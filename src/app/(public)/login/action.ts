@@ -1,33 +1,28 @@
-import { z } from 'zod';
+"use server";
+
+import {redirect} from "next/navigation";
+
+import {AlertStatusEnum} from "@/lib/enums";
+import {apiV1URL, postRequest, ResponseType} from "@/lib/request";
+import {ROUTES_API, ROUTES_APP} from "@/constants/routes";
+import {ErrorAlertType} from "@/lib/types";
 
 export type LoginFormData = {
     username: string;
     password: string;
+    alert: ErrorAlertType;
 };
 
-export const loginDefaultValues: LoginFormData = {
-    username: "",
-    password: "",
-};
+export async function loginAction(prevState: LoginFormData, queryData: FormData) {
+    const username: FormDataEntryValue = queryData.get('username');
+    const password: FormDataEntryValue = queryData.get('password');
 
-export const loginSchema = z.object({
-    username: z.preprocess(
-        (value) => (value === '' ? undefined : value),
-        z.string({ message: "validation.required" }),
-    ),
-    password: z.preprocess(
-        (value) => (value === '' ? undefined : value),
-        z.string({ message: "validation.required" }),
-    ),
-});
+    let alert: ErrorAlertType = {show: false};
 
-export async function loginAction(data) {
-    // const submission = parseWithZod(formData, {schema: loginSchema})
+    const response: ResponseType = await postRequest(apiV1URL(ROUTES_API.AUTH.LOGIN), {username, password}, true);
 
-    // console.log('submission.reply()', submission.reply())
+    if(response.status) redirect(ROUTES_APP.HOME);
+    else alert = {show: true, message: response.message, status: AlertStatusEnum.ERROR};
 
-    // if (submission.status !== 'success') {
-    //     return submission.reply();
-    // }
-    console.log({data})
+    return  {...prevState, alert};
 }

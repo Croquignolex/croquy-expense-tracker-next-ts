@@ -41,7 +41,7 @@ const CustomAlert: FC<CustomAlertPropsType> = ({data}): ReactElement | null => {
         <Alert variant={d.variant}>
             {d.icon}
             <AlertTitle className="font-bold">{d.title}</AlertTitle>
-            <AlertDescription>{message}</AlertDescription>
+            <AlertDescription>{t(message)}</AlertDescription>
         </Alert>
     );
 };

@@ -2,9 +2,9 @@
 
 import {cookies} from "next/headers";
 
-import {log} from "@/helpers/general";
+import {log} from "@/lib/helpers";
 
-export const getCookieItem = async (key): Promise<string | null> => {
+export const getCookieItem = async (key: string): Promise<string | null> => {
     if (typeof cookies !== "undefined") {
         const c = await cookies();
         return c.get(key)?.value.toString();
@@ -13,16 +13,16 @@ export const getCookieItem = async (key): Promise<string | null> => {
     return null;
 };
 
-export const setCookieIItem = async (key, data): Promise<void> => {
+export const setCookieIItem = async (key: string, data: string): Promise<void> => {
     if (typeof cookies !== "undefined") {
         const c = await cookies();
-        c.set(key, data.toString());
+        c.set(key, data);
     } else {
         log("Unable to set local storage", {key, data});
     }
 };
 
-export const removeCookieIItem = async (key): Promise<void> => {
+export const removeCookieIItem = async (key: string): Promise<void> => {
     if (typeof cookies !== "undefined") {
         const c = await cookies();
         c.delete(key);

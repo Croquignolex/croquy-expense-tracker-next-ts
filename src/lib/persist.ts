@@ -1,6 +1,6 @@
 import secureLocalStorage from "react-secure-storage";
 
-import {log} from "@/helpers/general";
+import {log} from "@/lib/helpers";
 
 export const getLocaleStorageItem = (key: string): object | null => {
     if (typeof window !== "undefined") {

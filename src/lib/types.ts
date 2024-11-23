@@ -1,18 +1,17 @@
 import {ReactNode} from "react";
 
-import {GlobalStateType, ReducerActionType} from "@/lib/context";
-import {AlertStatusEnum} from "@/lib/enums";
+import {AlertStatusEnum, RoleEnum} from "@/lib/enums";
 
 export type LayoutPropsType = Readonly<{children: ReactNode}>;
 
-export type MediaType = {
-    id: string;
-    originalName?: string;
-    size?: number;
-    path: string;
-    createdAt: string;
-    base64?: string | null;
-}
+export type GlobalStateType = {
+    user: UserType
+};
+
+export type ReducerActionType = {
+    type: string;
+    payload?: object;
+};
 
 export type ContextType = {
     globalState: GlobalStateType;
@@ -35,4 +34,23 @@ export type URLParamType = {
     value: unknown;
 };
 
+export type UserType = {
+    isAuthorized?: boolean;
+    lastName: string;
+    emailAddress: string;
+    phoneNumber: string;
+    firstName: string;
+    username: string;
+    role?: RoleEnum | null;
+    avatar?: MediaType | null;
+};
+
+export type MediaType = {
+    id: string;
+    originalName?: string;
+    size?: number;
+    path: string;
+    createdAt: string;
+    base64?: string | null;
+}
 

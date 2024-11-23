@@ -1,23 +1,43 @@
 "use client"
 
-import {ReactElement} from "react";
+import {ReactElement, useActionState} from "react";
 import {useTranslations} from "next-intl";
 import {LayoutDashboard} from "lucide-react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
+import {z} from "zod";
 
 import {Button} from "@/components/ui/button";
-import {Card, CardDescription, CardContent, CardHeader, CardTitle, CardFooter} from "@/components/ui/card";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {SvgIcons} from "@/components/svgIcons";
-import {loginAction, loginDefaultValues, LoginFormData, loginSchema} from "@/app/(public)/login/action";
+import {loginAction, LoginFormData} from "@/app/(public)/login/action";
 import {TextInput} from "@/components/input/text";
 import {PasswordInput} from "@/components/input/password";
 import {CustomButton} from "@/components/custom/button";
+import {CustomAlert} from "@/components/custom/alert";
+
+const loginDefaultValues: LoginFormData = {
+    username: "",
+    password: "",
+    alert: {show: false},
+};
+
+const loginSchema = z.object({
+    username: z.preprocess(
+        (value) => (value === '' ? undefined : value),
+        z.string({ message: "validation.required" }),
+    ),
+    password: z.preprocess(
+        (value) => (value === '' ? undefined : value),
+        z.string({ message: "validation.required" }),
+    ),
+});
 
 export default function LoginPage(): ReactElement {
     const t = useTranslations();
+    const [formState, formAction, isPending] = useActionState(loginAction, loginDefaultValues);
 
-    const { control, handleSubmit } = useForm<LoginFormData>({
+    const {control} = useForm<LoginFormData>({
         mode: "all",
         defaultValues: loginDefaultValues,
         resolver: zodResolver(loginSchema),
@@ -27,7 +47,7 @@ export default function LoginPage(): ReactElement {
         <div className="w-full min-h-screen">
             <div className="flex justify-center my-28 mx-4">
                 <Card className="w-full max-w-md">
-                    <form onSubmit={handleSubmit(loginAction)}>
+                    <form action={formAction}>
                         <CardHeader>
                             <CardTitle className="text-2xl">
                                 <LayoutDashboard className="m-auto mb-2 size-10" />
@@ -59,7 +79,7 @@ export default function LoginPage(): ReactElement {
                                 </div>
                             </div>
 
-                            {/*<CustomAlert data={loginAlertData} />*/}
+                            <CustomAlert data={formState.alert} />
 
                             <TextInput
                                 control={control}
@@ -79,7 +99,7 @@ export default function LoginPage(): ReactElement {
                             <CustomButton
                                 className={"w-full"}
                                 label={t("signIn")}
-                                loading={false}
+                                loading={isPending}
                             />
                         </CardFooter>
                     </form>

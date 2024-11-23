@@ -1,12 +1,18 @@
-import {ReactElement, useContext} from "react";
+import {ReactElement} from "react";
 
-import {ContextType} from "@/lib/types";
-import {RootContext} from "@/lib/context";
+// import {RootContext} from "@/lib/context";
 
 export default function HomePage(): ReactElement {
-    const context: ContextType = useContext(RootContext) as ContextType;
+    // const context: ContextType = useContext(RootContext) as ContextType;
 
-    return (
-        <div>Home page {context.globalState.firstName}</div>
-    );
+   /* toast({
+        title: t("login.authentication"),
+        description: t("login.welcome", {firstName: payload.firstName})
+    });*/
+
+    return null;
+
+   /* return (
+        <div>Home page {context.globalState.user.firstName}</div>
+    );*/
 };

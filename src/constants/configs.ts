@@ -9,5 +9,5 @@ export const ENV_APP = {
 } as const;
 
 export const ENV_API = {
-    BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    BASE_URL: process.env.API_BASE_URL,
 } as const;

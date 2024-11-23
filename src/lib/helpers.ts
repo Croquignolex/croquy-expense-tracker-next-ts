@@ -1,5 +1,3 @@
-import {AxiosError} from "axios";
-
 import {ErrorAlertType} from "@/lib/types";
 import {AlertStatusEnum} from "@/lib/enums";
 
@@ -13,10 +11,10 @@ export const log = (message: string, data?: object): void => {
 };
 
 // Error alert
-export const errorAlert = (error): ErrorAlertType => {
-    let message: string = "";
+export const errorAlert = (): ErrorAlertType => {
+    const message: string = "";
 
-    if(error.response?.data['message']) {
+    /*if(error.response?.data['message']) {
         message = error.response.data['message'];
     }
     else if(error.message) {
@@ -36,18 +34,9 @@ export const errorAlert = (error): ErrorAlertType => {
             case AxiosError.ETIMEDOUT: message = "ETIMEDOUT"; break;
             case AxiosError.ERR_CANCELED: message = "ERR_CANCELED"; break;
         }
-    }
+    }*/
 
     return {show: true, status: AlertStatusEnum.ERROR, message};
-};
-
-// Generate random UUID
-export const generateUUID = (): string => {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c: string) {
-        const r: number = (Math.random() * 16) | 0;
-        const v: number = c === "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    });
 };
 
 // Get timezone name
@@ -122,5 +111,6 @@ export const timezoneName = (): string => {
     if(765 === so && 825 === wo) return "Pacific/Chatham";
     if(780 === so && 780 === wo) return "Pacific/Enderbury";
     if(840 === so && 840 === wo) return "Pacific/Kiritimati";
+    
     return "UTC";
 };
